@@ -13,10 +13,10 @@ def movePos(direction, value, position):
     return position
 
 directions = ["N", "E", "S", "W"]
-pos = [0,0]
+ship = [0, 0]
 facing = 1
 for instruction in instructions:
-    action = instruction[:1]
+    action = instruction[0]
     value = int(instruction[1:])
     if action in ["L", "R"]:
         steps = value / 90
@@ -25,8 +25,36 @@ for instruction in instructions:
         else:
             facing = int((facing + steps) % len(directions))
     elif action == "F":
-        pos = movePos(directions[facing], value, pos)
+        ship = movePos(directions[facing], value, ship)
     else:
-        pos = movePos(action, value, pos)
+        ship = movePos(action, value, ship)
 
-print(abs(pos[0]) + abs(pos[1]))
+print(abs(ship[0]) + abs(ship[1]))
+
+ship = [0, 0]
+waypoint = [1, 10, 0, 0]
+for instruction in instructions:
+    action = instruction[0]
+    value = int(instruction[1:])
+    if action in ["L", "R"]:
+        steps = value // 90
+        if action == "L":
+            for i in range(steps):
+                waypoint = waypoint[1:] + [waypoint[0]]
+        else:
+            for i in range(steps):
+                waypoint = [waypoint[3]] + waypoint[:3]
+    elif action == "F":
+        ship[0] += value * (waypoint[0] - waypoint[2])
+        ship[1] += value * (waypoint[1] - waypoint[3])
+    else:
+        if action == "N":
+            waypoint[0] += value
+        elif action == "S":
+            waypoint[2] += value
+        elif action == "E":
+            waypoint[1] += value
+        elif action == "W":
+            waypoint[3] += value
+
+print(abs(ship[0]) + abs(ship[1]))
