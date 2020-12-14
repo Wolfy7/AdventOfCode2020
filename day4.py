@@ -1,7 +1,7 @@
 import re
 passpords = []
 passpord = {}
-with open("Day4\input_day4.txt") as f:
+with open("input_day4.txt") as f:
     for line in f:
         line = line.strip()
         if(len(line) > 0):
@@ -17,6 +17,7 @@ passpords.append(passpord)
 valid = 0
 fields = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}
 for p in passpords:
+    #if( all( v in p for v in fields)):
     if fields.issubset(p.keys()):
         valid += 1
 
@@ -70,7 +71,6 @@ for p in passpords:
                     p_valid = False
                     break
             if(key == "pid"):
-                print(p["pid"])
                 x = re.search("^[0-9]{9}$", p["pid"])
                 if not(x):
                     p_valid = False

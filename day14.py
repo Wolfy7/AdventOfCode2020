@@ -24,7 +24,6 @@ for action in program:
             else:
                 t += c
         mem[address] = t
-
 print(sum(mem.values()))
 
 # Part two
