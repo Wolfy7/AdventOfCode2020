@@ -1,4 +1,3 @@
-
 import re
 with open("input_day14.txt") as f:
     program = f.read().splitlines()
@@ -26,10 +25,7 @@ for action in program:
                 t += c
         mem[address] = t
 
-result = 0
-for m in mem.values():
-    result += (int(m, 2))
-print(result)
+print(sum(mem.values()))
 
 # Part two
 import itertools
